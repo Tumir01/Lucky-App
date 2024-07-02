@@ -5,6 +5,7 @@ import android.content.SharedPreferences
 import android.graphics.Color
 import android.os.Bundle
 import android.os.CountDownTimer
+import android.view.View
 import android.widget.Button
 import android.widget.GridLayout
 import androidx.appcompat.app.AppCompatActivity
@@ -16,21 +17,27 @@ class GameActivity : AppCompatActivity() {
     private lateinit var bindingClass: ActivityGameBinding
     private lateinit var sharedPreferences: SharedPreferences
     private var roundTime: Int = 10000
+    private var difficulty: String? = "medium"
+
     private val preferenceChangeListener = SharedPreferences.OnSharedPreferenceChangeListener { _, key ->
-        if (key == "background") {
-            val savedBackground = sharedPreferences.getInt("background", R.drawable.main_screen_1)
-            bindingClass.gameLinearLayout.setBackgroundResource(savedBackground)
-        }
-        if (key == "time") {
-            roundTime = sharedPreferences.getInt("time", 10000)
-        }
-        if (key == "difficulty") {
-            val difficulty: String? = sharedPreferences.getString("difficulty", "medium")
+        when (key) {
+            "background" -> {
+                val savedBackground = sharedPreferences.getInt("background", R.drawable.main_screen_1)
+                bindingClass.gameLinearLayout.setBackgroundResource(savedBackground)
+            }
+            "time" -> {
+                roundTime = sharedPreferences.getInt("time", 10000)
+                resetTimer()
+                startTimer()
+            }
+            "difficulty" -> {
+                difficulty = sharedPreferences.getString("difficulty", "medium")
+                startNewRound()
+            }
         }
     }
 
     private var timer: CountDownTimer? = null
-
     private var targetColor: Int = 0
     private var score: Int = 0
 
@@ -43,9 +50,11 @@ class GameActivity : AppCompatActivity() {
         sharedPreferences.registerOnSharedPreferenceChangeListener(preferenceChangeListener)
 
         roundTime = sharedPreferences.getInt("time", 10000)
+        difficulty = sharedPreferences.getString("difficulty", "medium")
 
         val savedBackground = sharedPreferences.getInt("background", R.drawable.main_screen_1)
         bindingClass.gameLinearLayout.setBackgroundResource(savedBackground)
+
 
         startNewRound()
     }
@@ -58,27 +67,72 @@ class GameActivity : AppCompatActivity() {
 
         bindingClass.colorGrid.removeAllViews()
 
-        val colors = generateRandomColors(8, targetColor)
-        colors.shuffle()
+        val colors = when (difficulty) {
+            "low" -> generateRandomColors(4, targetColor)
+            "medium" -> generateRandomColors(9, targetColor)
+            "hard" -> generateRandomColors(16, targetColor)
+            else -> generateRandomColors(9, targetColor)
+        }.apply { shuffle() }
 
-        for (color in colors) {
-            val colorButton = Button(this).apply {
-                layoutParams = GridLayout.LayoutParams().apply {
-                    width = 250
-                    height = 250
-                    setMargins(8, 8, 8, 8)
+        when (difficulty) {
+            "low" -> {
+                bindingClass.colorGrid.rowCount = 2
+                bindingClass.colorGrid.columnCount = 2
+                val buttonSize = 400
+                for (color in colors) {
+                    val colorButton = Button(this).apply {
+                        layoutParams = GridLayout.LayoutParams().apply {
+                            width = buttonSize
+                            height = buttonSize
+                            setMargins(22, 22, 22, 22)
+                        }
+                        setBackgroundColor(color)
+                        setOnClickListener { onColorClicked(color) }
+                    }
+                    bindingClass.colorGrid.addView(colorButton)
                 }
-                setBackgroundColor(color)
-                setOnClickListener { onColorClicked(color) }
             }
-            bindingClass.colorGrid.addView(colorButton)
+            "medium" -> {
+                bindingClass.colorGrid.rowCount = 3
+                bindingClass.colorGrid.columnCount = 3
+                val buttonSize = resources.getDimensionPixelSize(R.dimen.grid_button_size)
+                for (color in colors) {
+                    val colorButton = Button(this).apply {
+                        layoutParams = GridLayout.LayoutParams().apply {
+                            width = buttonSize
+                            height = buttonSize
+                            setMargins(14, 14, 14, 14)
+                        }
+                        setBackgroundColor(color)
+                        setOnClickListener { onColorClicked(color) }
+                    }
+                    bindingClass.colorGrid.addView(colorButton)
+                }
+            }
+            "hard" -> {
+                bindingClass.colorGrid.rowCount = 4
+                bindingClass.colorGrid.columnCount = 4
+                val buttonSize = 200
+                for (color in colors) {
+                    val colorButton = Button(this).apply {
+                        layoutParams = GridLayout.LayoutParams().apply {
+                            width = buttonSize
+                            height = buttonSize
+                            setMargins(8, 8, 8, 8)
+                        }
+                        setBackgroundColor(color)
+                        setOnClickListener { onColorClicked(color) }
+                    }
+                    bindingClass.colorGrid.addView(colorButton)
+                }
+            }
         }
     }
 
     private fun onColorClicked(color: Int) {
         if (color == targetColor) {
             score++
-            bindingClass.scoreText.text = "Score: $score"
+            bindingClass.scoreText.text = "${getString(R.string.score)} $score"
             startNewRound()
         } else {
             gameOver()
@@ -88,7 +142,7 @@ class GameActivity : AppCompatActivity() {
     private fun startTimer() {
         timer = object : CountDownTimer(roundTime.toLong(), 1000) {
             override fun onTick(millisUntilFinished: Long) {
-                bindingClass.timerTV.text = "Time: ${millisUntilFinished / 1000}"
+                bindingClass.timerTV.text = "${getString(R.string.time)} ${millisUntilFinished / 1000}"
             }
 
             override fun onFinish() {
@@ -104,8 +158,8 @@ class GameActivity : AppCompatActivity() {
 
     private fun gameOver() {
         resetTimer()
-        bindingClass.timerTV.text = "Time: 0"
-        bindingClass.scoreText.text = "Game Over! Final Score: $score"
+        bindingClass.timerTV.text = getString(R.string.end_time_text)
+        bindingClass.scoreText.text = "${getString(R.string.end_score_text)} $score"
         bindingClass.targetColorView.setBackgroundColor(Color.TRANSPARENT)
         bindingClass.colorGrid.removeAllViews()
     }
@@ -117,7 +171,7 @@ class GameActivity : AppCompatActivity() {
 
     private fun generateRandomColors(count: Int, targetColor: Int): MutableList<Int> {
         val colors = mutableListOf(targetColor)
-        while (colors.size <= count) {
+        while (colors.size < count) {
             val newColor = generateRandomColor()
             if (newColor != targetColor) {
                 colors.add(newColor)

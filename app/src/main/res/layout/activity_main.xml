@@ -39,7 +39,8 @@
             android:layout_gravity="center"
             android:background="@null"
             android:scaleType="fitCenter"
-            app:srcCompat="@drawable/start_button" />
+            app:srcCompat="@drawable/start_button"
+            android:contentDescription="@string/start"/>
 
         <ImageButton
             android:id="@+id/settingsButton"
@@ -48,7 +49,8 @@
             android:layout_gravity="center"
             android:background="@null"
             android:scaleType="fitCenter"
-            app:srcCompat="@drawable/settings_button" />
+            app:srcCompat="@drawable/settings_button"
+            android:contentDescription="@string/settings"/>
 
         <ImageButton
             android:id="@+id/exitButton"
@@ -57,7 +59,8 @@
             android:layout_gravity="center"
             android:background="@null"
             android:scaleType="fitCenter"
-            app:srcCompat="@drawable/button" />
+            app:srcCompat="@drawable/button"
+            android:contentDescription="@string/exit"/>
 
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

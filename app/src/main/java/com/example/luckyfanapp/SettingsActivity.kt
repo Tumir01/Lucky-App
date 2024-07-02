@@ -1,9 +1,9 @@
 package com.example.luckyfanapp
 
-import android.os.Bundle
 import android.content.Context
+import android.content.Intent
 import android.content.SharedPreferences
-import android.util.Log
+import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.example.luckyfanapp.databinding.ActivitySettingsBinding
 
@@ -17,6 +17,8 @@ class SettingsActivity : AppCompatActivity() {
         setContentView(bindingClass.root)
 
         sharedPreferences = getSharedPreferences("MyAppPreferences", Context.MODE_PRIVATE)
+
+        setDefaultValues()
 
         bindingClass.apply {
             radioGroupBackground.setOnCheckedChangeListener { _, checkedId ->
@@ -64,10 +66,30 @@ class SettingsActivity : AppCompatActivity() {
                     }
                 }
                 editor.apply()
+                val intent = Intent(this@SettingsActivity, GameActivity::class.java)
+                startActivity(intent)
+                finish()
             }
         }
 
         val savedBackground = sharedPreferences.getInt("background", R.drawable.main_screen_1)
         bindingClass.settingsLinearLayout.setBackgroundResource(savedBackground)
+    }
+
+    private fun setDefaultValues() {
+        val defaultDifficulty = "medium"
+        val defaultTime = 10000
+
+        when (sharedPreferences.getString("difficulty", defaultDifficulty)) {
+            "low" -> bindingClass.lowRB.isChecked = true
+            "medium" -> bindingClass.mediumRB.isChecked = true
+            "hard" -> bindingClass.hardRB.isChecked = true
+        }
+
+        when (sharedPreferences.getInt("time", defaultTime)) {
+            5000 -> bindingClass.fiveSecRB.isChecked = true
+            10000 -> bindingClass.tenSecRB.isChecked = true
+            20000 -> bindingClass.twentySecRB.isChecked = true
+        }
     }
 }
