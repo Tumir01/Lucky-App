@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.luckyfanapp.Constants.PERMISSION_BACKGROUND
 import com.example.luckyfanapp.Constants.SHARED_PREFERENCES_NAME
 import com.example.luckyfanapp.databinding.ActivityMainBinding
+import kotlin.system.exitProcess
 
 class MainActivity : AppCompatActivity() {
     private lateinit var bindingClass : ActivityMainBinding
@@ -37,7 +38,8 @@ class MainActivity : AppCompatActivity() {
                 startActivity(intent)
             }
             exitButton.setOnClickListener {
-                finish()
+                finishAffinity()
+                exitProcess(0)
             }
             informationButton.setOnClickListener {
                 val intent = Intent(this@MainActivity, InfoActivity::class.java)

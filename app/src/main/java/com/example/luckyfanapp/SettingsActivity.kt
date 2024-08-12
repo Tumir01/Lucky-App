@@ -104,6 +104,13 @@ class SettingsActivity : AppCompatActivity() {
     private fun setDefaultValues() {
         val defaultDifficulty = MEDIUM_DIFFICULT
         val defaultTime = TEN_SECS_TIMER
+        val defaultBackground = R.drawable.main_screen_1
+
+        when (sharedPreferences.getInt(PERMISSION_BACKGROUND, defaultBackground)) {
+            R.drawable.main_screen_1 -> bindingClass.backgroundFirstRB.isChecked = true
+            R.drawable.main_screen_2 -> bindingClass.backgroundSecondRB.isChecked = true
+        }
+
 
         when (sharedPreferences.getString(PERMISSION_DIFFICULTY, defaultDifficulty)) {
             LOW_DIFFICULT -> { bindingClass.lowRB.isChecked = true
