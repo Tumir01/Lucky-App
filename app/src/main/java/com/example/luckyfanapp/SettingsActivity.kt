@@ -4,7 +4,19 @@ import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.edit
+import com.example.luckyfanapp.Constants.FIVE_SECS_TIMER
+import com.example.luckyfanapp.Constants.HARD_DIFFICULT
+import com.example.luckyfanapp.Constants.LOW_DIFFICULT
+import com.example.luckyfanapp.Constants.MEDIUM_DIFFICULT
+import com.example.luckyfanapp.Constants.PERMISSION_BACKGROUND
+import com.example.luckyfanapp.Constants.PERMISSION_DIFFICULTY
+import com.example.luckyfanapp.Constants.PERMISSION_TIME
+import com.example.luckyfanapp.Constants.SHARED_PREFERENCES_NAME
+import com.example.luckyfanapp.Constants.TEN_SECS_TIMER
+import com.example.luckyfanapp.Constants.TWENTY_SECS_TIMER
 import com.example.luckyfanapp.databinding.ActivitySettingsBinding
 
 class SettingsActivity : AppCompatActivity() {
@@ -16,7 +28,7 @@ class SettingsActivity : AppCompatActivity() {
         bindingClass = ActivitySettingsBinding.inflate(layoutInflater)
         setContentView(bindingClass.root)
 
-        sharedPreferences = getSharedPreferences("MyAppPreferences", Context.MODE_PRIVATE)
+        sharedPreferences = getSharedPreferences(SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE)
 
         setDefaultValues()
 
@@ -26,11 +38,11 @@ class SettingsActivity : AppCompatActivity() {
                 when (checkedId) {
                     R.id.backgroundFirstRB -> {
                         settingsLinearLayout.setBackgroundResource(R.drawable.main_screen_1)
-                        editor.putInt("background", R.drawable.main_screen_1)
+                        editor.putInt(PERMISSION_BACKGROUND, R.drawable.main_screen_1)
                     }
                     R.id.backgroundSecondRB -> {
                         settingsLinearLayout.setBackgroundResource(R.drawable.main_screen_2)
-                        editor.putInt("background", R.drawable.main_screen_2)
+                        editor.putInt(PERMISSION_BACKGROUND, R.drawable.main_screen_2)
                     }
                 }
                 editor.apply()
@@ -40,13 +52,13 @@ class SettingsActivity : AppCompatActivity() {
                 val editor = sharedPreferences.edit()
                 when (checkedId) {
                     R.id.fiveSecRB -> {
-                        editor.putInt("time", 5000)
+                        editor.putInt(PERMISSION_TIME, FIVE_SECS_TIMER)
                     }
                     R.id.tenSecRB -> {
-                        editor.putInt("time", 10000)
+                        editor.putInt(PERMISSION_TIME, TEN_SECS_TIMER)
                     }
                     R.id.twentySecRB -> {
-                        editor.putInt("time", 20000)
+                        editor.putInt(PERMISSION_TIME, TWENTY_SECS_TIMER)
                     }
                 }
                 editor.apply()
@@ -54,42 +66,56 @@ class SettingsActivity : AppCompatActivity() {
 
             radioGroupDifficulty.setOnCheckedChangeListener { _, checkedId ->
                 val editor = sharedPreferences.edit()
+                var newDifficulty: String? = null
+                var shouldShowTimeBG = true
+
                 when (checkedId) {
                     R.id.lowRB -> {
-                        editor.putString("difficulty", "low")
+                        newDifficulty = LOW_DIFFICULT
+                        shouldShowTimeBG = false
                     }
                     R.id.mediumRB -> {
-                        editor.putString("difficulty", "medium")
+                        newDifficulty = MEDIUM_DIFFICULT
                     }
                     R.id.hardRB -> {
-                        editor.putString("difficulty", "hard")
+                        newDifficulty = HARD_DIFFICULT
                     }
                 }
-                editor.apply()
-                val intent = Intent(this@SettingsActivity, GameActivity::class.java)
-                startActivity(intent)
-                finish()
+
+                val currentDifficulty = sharedPreferences.getString(PERMISSION_DIFFICULTY, "")
+                if (currentDifficulty != newDifficulty) {
+                    editor.putString(PERMISSION_DIFFICULTY, newDifficulty)
+                    editor.apply()
+                }
+
+                bindingClass.timeBG.visibility = if (shouldShowTimeBG) View.VISIBLE else View.INVISIBLE
             }
         }
 
-        val savedBackground = sharedPreferences.getInt("background", R.drawable.main_screen_1)
+        val savedBackground = sharedPreferences.getInt(PERMISSION_BACKGROUND, R.drawable.main_screen_1)
         bindingClass.settingsLinearLayout.setBackgroundResource(savedBackground)
+
+        bindingClass.backButton2.setOnClickListener {
+            val intent = Intent(this@SettingsActivity, MainActivity::class.java)
+            startActivity(intent)
+        }
     }
 
     private fun setDefaultValues() {
-        val defaultDifficulty = "medium"
-        val defaultTime = 10000
+        val defaultDifficulty = MEDIUM_DIFFICULT
+        val defaultTime = TEN_SECS_TIMER
 
-        when (sharedPreferences.getString("difficulty", defaultDifficulty)) {
-            "low" -> bindingClass.lowRB.isChecked = true
-            "medium" -> bindingClass.mediumRB.isChecked = true
-            "hard" -> bindingClass.hardRB.isChecked = true
+        when (sharedPreferences.getString(PERMISSION_DIFFICULTY, defaultDifficulty)) {
+            LOW_DIFFICULT -> { bindingClass.lowRB.isChecked = true
+                bindingClass.timeBG.visibility = View.INVISIBLE }
+            MEDIUM_DIFFICULT -> bindingClass.mediumRB.isChecked = true
+            HARD_DIFFICULT -> bindingClass.hardRB.isChecked = true
         }
 
-        when (sharedPreferences.getInt("time", defaultTime)) {
-            5000 -> bindingClass.fiveSecRB.isChecked = true
-            10000 -> bindingClass.tenSecRB.isChecked = true
-            20000 -> bindingClass.twentySecRB.isChecked = true
+        when (sharedPreferences.getInt(PERMISSION_TIME, defaultTime)) {
+            FIVE_SECS_TIMER -> bindingClass.fiveSecRB.isChecked = true
+            TEN_SECS_TIMER -> bindingClass.tenSecRB.isChecked = true
+            TWENTY_SECS_TIMER -> bindingClass.twentySecRB.isChecked = true
         }
     }
 }

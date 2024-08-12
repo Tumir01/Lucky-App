@@ -16,10 +16,17 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:layout_editor_absoluteX="0dp">
 
+        <ImageView
+            android:id="@+id/backButtonInfo"
+            android:layout_width="@dimen/round_button_size"
+            android:layout_height="@dimen/round_button_size"
+            android:layout_margin="@dimen/margin_for_round_buttons"
+            app:srcCompat="@drawable/back_button" />
+
         <TextView
             android:id="@+id/aboutTV"
-            android:layout_width="113dp"
-            android:layout_height="107dp"
+            android:layout_width="@dimen/title_view_width"
+            android:layout_height="@dimen/title_view_height"
             android:layout_gravity="center"
             android:fontFamily="@font/black_han_sans"
             android:gravity="center"
@@ -29,9 +36,10 @@
 
         <TextView
             android:id="@+id/descriptionTV"
-            android:layout_width="359dp"
-            android:layout_height="546dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:layout_gravity="center"
+            android:layout_margin="30dp"
             android:layout_marginTop="40dp"
             android:background="@drawable/background_for_items"
             android:padding="17dp"

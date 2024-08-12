@@ -5,14 +5,16 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import com.example.luckyfanapp.Constants.PERMISSION_BACKGROUND
+import com.example.luckyfanapp.Constants.SHARED_PREFERENCES_NAME
 import com.example.luckyfanapp.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
     private lateinit var bindingClass : ActivityMainBinding
     private lateinit var sharedPreferences: SharedPreferences
     private val preferenceChangeListener = SharedPreferences.OnSharedPreferenceChangeListener { _, key ->
-        if (key == "background") {
-            val savedBackground = sharedPreferences.getInt("background", R.drawable.main_screen_1)
+        if (key == PERMISSION_BACKGROUND) {
+            val savedBackground = sharedPreferences.getInt(PERMISSION_BACKGROUND, R.drawable.main_screen_1)
             bindingClass.mainLinearLayout.setBackgroundResource(savedBackground)
         }
     }
@@ -22,7 +24,7 @@ class MainActivity : AppCompatActivity() {
         bindingClass = ActivityMainBinding.inflate(layoutInflater)
         setContentView(bindingClass.root)
 
-        sharedPreferences = getSharedPreferences("MyAppPreferences", Context.MODE_PRIVATE)
+        sharedPreferences = getSharedPreferences(SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE)
         sharedPreferences.registerOnSharedPreferenceChangeListener(preferenceChangeListener)
 
         bindingClass.apply {
@@ -42,7 +44,7 @@ class MainActivity : AppCompatActivity() {
                 startActivity(intent)
             }
 
-            val savedBackground = sharedPreferences.getInt("background", R.drawable.main_screen_1)
+            val savedBackground = sharedPreferences.getInt(PERMISSION_BACKGROUND, R.drawable.main_screen_1)
             mainLinearLayout.setBackgroundResource(savedBackground)
         }
     }

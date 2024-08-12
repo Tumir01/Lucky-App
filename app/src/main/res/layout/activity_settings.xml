@@ -20,21 +20,34 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <TextView
-            android:id="@+id/settingsTV"
-            android:layout_width="141dp"
-            android:layout_height="78dp"
-            android:layout_gravity="center"
-            android:fontFamily="@font/black_han_sans"
-            android:gravity="center"
-            android:text="@string/settings"
-            android:textColor="@color/white"
-            android:textSize="25sp" />
+        <RelativeLayout
+            android:id="@+id/hatLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/backButton2"
+                android:layout_width="@dimen/round_button_size"
+                android:layout_height="@dimen/round_button_size"
+                android:layout_margin="@dimen/margin_for_round_buttons"
+                app:srcCompat="@drawable/back_button" />
+
+            <TextView
+                android:id="@+id/settingsTV"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="50dp"
+                android:fontFamily="@font/black_han_sans"
+                android:gravity="center_horizontal"
+                android:text="@string/settings"
+                android:textColor="@color/white"
+                android:textSize="25sp" />
+        </RelativeLayout>
 
         <LinearLayout
             android:id="@+id/difficultyBG"
             android:layout_width="match_parent"
-            android:layout_height="135dp"
+            android:layout_height="wrap_content"
             android:layout_margin="20dp"
             android:background="@drawable/settings_field"
             android:orientation="vertical">
@@ -53,7 +66,7 @@
             <RadioGroup
                 android:id="@+id/radioGroupDifficulty"
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
                 android:orientation="horizontal">
@@ -62,6 +75,8 @@
                     android:id="@+id/lowRB"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="10dp"
                     android:background="@drawable/radio_button_shape"
                     android:button="@null"
                     android:fontFamily="@font/andika"
@@ -74,6 +89,8 @@
                     android:id="@+id/mediumRB"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="10dp"
                     android:background="@drawable/radio_button_shape"
                     android:button="@null"
                     android:fontFamily="@font/andika"
@@ -86,6 +103,8 @@
                     android:id="@+id/hardRB"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="10dp"
                     android:background="@drawable/radio_button_shape"
                     android:button="@null"
                     android:fontFamily="@font/andika"
@@ -101,7 +120,7 @@
         <LinearLayout
             android:id="@+id/backgroundBG"
             android:layout_width="match_parent"
-            android:layout_height="179dp"
+            android:layout_height="wrap_content"
             android:layout_margin="20dp"
             android:background="@drawable/settings_field"
             android:orientation="vertical">
@@ -109,9 +128,10 @@
             <TextView
                 android:id="@+id/backgroundTV"
                 android:layout_width="wrap_content"
-                android:layout_height="50dp"
+                android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
                 android:fontFamily="@font/andika"
                 android:text="@string/select_a_background"
                 android:textColor="@color/white"
@@ -126,19 +146,25 @@
 
                 <RadioButton
                     android:id="@+id/backgroundFirstRB"
-                    android:layout_width="54dp"
-                    android:layout_height="98dp"
+                    android:layout_width="50dp"
+                    android:layout_height="100dp"
+                    android:layout_marginTop="5dp"
                     android:layout_marginEnd="40dp"
+                    android:layout_marginBottom="20dp"
                     android:background="@drawable/background_radio_button1"
-                    android:button="@null"/>
+                    android:button="@null"
+                    android:padding="0dp" />
 
                 <RadioButton
                     android:id="@+id/backgroundSecondRB"
-                    android:layout_width="54dp"
-                    android:layout_height="98dp"
+                    android:layout_width="50dp"
+                    android:layout_height="100dp"
                     android:layout_marginStart="40dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="20dp"
                     android:background="@drawable/background_radio_button2"
-                    android:button="@null"/>
+                    android:button="@null"
+                    android:padding="0dp" />
             </RadioGroup>
 
         </LinearLayout>
@@ -146,10 +172,11 @@
         <LinearLayout
             android:id="@+id/timeBG"
             android:layout_width="match_parent"
-            android:layout_height="135dp"
+            android:layout_height="wrap_content"
             android:layout_margin="20dp"
             android:background="@drawable/settings_field"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:visibility="visible">
 
             <TextView
                 android:id="@+id/timeTV"
@@ -173,6 +200,8 @@
                     android:id="@+id/fiveSecRB"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="10dp"
                     android:background="@drawable/radio_button_shape"
                     android:button="@null"
                     android:fontFamily="@font/andika"
@@ -185,6 +214,8 @@
                     android:id="@+id/tenSecRB"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="10dp"
                     android:background="@drawable/radio_button_shape"
                     android:button="@null"
                     android:fontFamily="@font/andika"
@@ -197,6 +228,8 @@
                     android:id="@+id/twentySecRB"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="10dp"
                     android:background="@drawable/radio_button_shape"
                     android:button="@null"
                     android:fontFamily="@font/andika"
