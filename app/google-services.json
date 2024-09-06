@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "533877610365",
+    "firebase_url": "https://lucky-fan-app-default-rtdb.firebaseio.com",
+    "project_id": "lucky-fan-app",
+    "storage_bucket": "lucky-fan-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:533877610365:android:8021e112bc5d47836f9e14",
+        "android_client_info": {
+          "package_name": "com.example.luckyfanapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCaYi3XWyoAKkxrFFcXT0GpqyL4QhDis_A"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

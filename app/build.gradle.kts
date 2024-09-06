@@ -1,6 +1,9 @@
 plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsKotlinAndroid)
+    id("kotlin-kapt")
+    id("com.google.devtools.ksp") version "1.9.0-1.0.13"
+    id("com.google.gms.google-services")
 }
 
 android {
@@ -39,6 +42,12 @@ android {
 }
 
 dependencies {
+
+    implementation("androidx.room:room-ktx:2.6.1")
+    implementation(libs.firebase.database)
+    kapt("androidx.room:room-compiler:2.6.1")
+    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.8.4")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.0")
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)

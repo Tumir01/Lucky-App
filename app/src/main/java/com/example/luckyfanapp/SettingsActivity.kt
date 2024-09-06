@@ -6,7 +6,6 @@ import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.edit
 import com.example.luckyfanapp.Constants.FIVE_SECS_TIMER
 import com.example.luckyfanapp.Constants.HARD_DIFFICULT
 import com.example.luckyfanapp.Constants.LOW_DIFFICULT
@@ -95,7 +94,7 @@ class SettingsActivity : AppCompatActivity() {
         val savedBackground = sharedPreferences.getInt(PERMISSION_BACKGROUND, R.drawable.main_screen_1)
         bindingClass.settingsLinearLayout.setBackgroundResource(savedBackground)
 
-        bindingClass.backButton2.setOnClickListener {
+        bindingClass.backButton.setOnClickListener {
             val intent = Intent(this@SettingsActivity, MainActivity::class.java)
             startActivity(intent)
         }

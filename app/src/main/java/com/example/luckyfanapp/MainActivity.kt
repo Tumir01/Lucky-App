@@ -45,6 +45,10 @@ class MainActivity : AppCompatActivity() {
                 val intent = Intent(this@MainActivity, InfoActivity::class.java)
                 startActivity(intent)
             }
+            statisticButton.setOnClickListener {
+                val intent = Intent(this@MainActivity, StatisticActivity::class.java)
+                startActivity(intent)
+            }
 
             val savedBackground = sharedPreferences.getInt(PERMISSION_BACKGROUND, R.drawable.main_screen_1)
             mainLinearLayout.setBackgroundResource(savedBackground)
