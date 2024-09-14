@@ -33,7 +33,7 @@
                 app:srcCompat="@drawable/back_button" />
 
             <TextView
-                android:id="@+id/settingsTV"
+                android:id="@+id/loginTV"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="50dp"

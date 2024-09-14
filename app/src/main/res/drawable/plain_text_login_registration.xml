@@ -8,14 +8,10 @@
     </item>
 
     <item>
-        <shape
-            android:shape="rectangle">
-
+        <shape android:shape="rectangle">
             <corners android:radius="8dp" />
 
             <solid android:color="@android:color/transparent" />
-
         </shape>
     </item>
-
 </layer-list>

@@ -190,4 +190,5 @@ object Constants {
     const val PERMISSION_DIFFICULTY = "difficulty"
     const val COUNT_OF_BUTTONS = 9
     const val SHARED_PREFERENCES_NAME = "MyAppPreferences"
+    const val NAME_OF_DB = "UserDb"
 }

@@ -30,6 +30,16 @@ in the short mode place must rally on their memory and ability to make quick dec
     <string name="log_in">Log in</string>
     <string name="sign_up">Sign up</string>
     <string name="statistic">Statistics</string>
+    <string name="not_all_fields_are_filled_in">Not all fields are filled in!</string>
+    <string name="incorrect_password">Incorrect password!</string>
+    <string name="user_is_not_found">User is not found!</string>
+    <string name="asking_for_permission">Please grant usage stats permission</string>
+    <string name="time_spent_message">Time spent in the app: %1$s</string>
+    <string name="error_getting_documents">Error getting documents:</string>
+    <string name="do_not_register_yet">Do not register yet?</string>
+    <string name="already_registered">Already Registered?</string>
+    <string name="you_dont_want_to_login">You dont want to login? :)</string>
+    <string name="registration_failed">Registration failed.</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 

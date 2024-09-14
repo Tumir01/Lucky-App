@@ -25,7 +25,7 @@
             app:srcCompat="@drawable/back_button" />
 
         <TextView
-            android:id="@+id/settingsTV"
+            android:id="@+id/statisticsTV"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="80dp"
@@ -36,7 +36,7 @@
             android:textSize="60sp" />
 
         <TextView
-            android:id="@+id/textView2"
+            android:id="@+id/timeCounterTV"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="@font/black_han_sans"

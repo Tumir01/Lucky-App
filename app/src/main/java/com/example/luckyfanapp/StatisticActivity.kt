@@ -16,7 +16,6 @@ import com.example.luckyfanapp.model.User
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlin.system.exitProcess
 
 class StatisticActivity : AppCompatActivity() {
     private lateinit var bindingClass : ActivityStatisticBinding
@@ -77,7 +76,7 @@ class StatisticActivity : AppCompatActivity() {
         val usageTimeSeconds = usageTimeMillis / 1000
         val usageTimeText = DateUtils.formatElapsedTime(usageTimeSeconds)
 
-        bindingClass.textView2.text = "Time spent today in the app: $usageTimeText"
+        bindingClass.timeCounterTV.text = getString(R.string.time_spent_message, usageTimeText)
 
         val db = MainDb.getDb(this)
         val androidId = getAndroidId(this)
@@ -98,11 +97,6 @@ class StatisticActivity : AppCompatActivity() {
         }
     }
 
-
-    fun clearDatabase(context: Context) {
-        context.deleteDatabase("UserDb")
-    }
-
     private fun getAndroidId(context: Context): String {
         return Settings.Secure.getString(context.contentResolver, Settings.Secure.ANDROID_ID)
     }
@@ -118,7 +112,7 @@ class StatisticActivity : AppCompatActivity() {
     }
 
     private fun requestUsageStatsPermission() {
-        Toast.makeText(this, "Please grant usage stats permission", Toast.LENGTH_LONG).show()
+        Toast.makeText(this, R.string.asking_for_permission, Toast.LENGTH_LONG).show()
         val intent = Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS)
         startActivity(intent)
     }
